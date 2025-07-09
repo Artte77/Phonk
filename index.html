@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHONK IN BONK Radio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a1a, #333);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .player {
+      background-color: #222;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #000;
+    }
+    .controls {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    button {
+      background: #444;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>PHONK IN BONK Radio</h1>
+  <div class="player">
+    <audio id="audio" controls autoplay hidden></audio>
+    <div class="controls">
+      <button onclick="prevTrack()">⏮️</button>
+      <button onclick="togglePlayPause()" id="playPauseBtn">⏸️</button>
+      <button onclick="nextTrack()">⏭️</button>
+    </div>
+    <div style="margin-top: 15px; text-align: center; font-weight: bold;">
+      <span id="trackTitle">Cargando...</span>
+    </div>
+  </div>
+
+  <script>
+    const tracks = [
+      "music/tema1.mp3",
+      "music/tema2.mp3",
+      "music/tema3.mp3",
+      "music/tema4.mp3",
+      "music/tema5.mp3",
+      "music/tema6.mp3",
+      "music/tema7.mp3",
+      "music/tema8.mp3",
+      "music/tema9.mp3",
+      "music/tema10.mp3"
+    ];
+
+    const trackNames = [
+      "Tema 1",
+      "Tema 2",
+      "Tema 3",
+      "Tema 4",
+      "Tema 5",
+      "Tema 6",
+      "Tema 7",
+      "Tema 8",
+      "Tema 9",
+      "Tema 10"
+    ];
+
+    let currentTrack = 0;
+    const audio = document.getElementById("audio");
+    const title = document.getElementById("trackTitle");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+
+    function loadTrack(index) {
+      audio.src = tracks[index];
+      title.textContent = trackNames[index];
+      audio.play();
+    }
+
+    function nextTrack() {
+      currentTrack = (currentTrack + 1) % tracks.length;
+      loadTrack(currentTrack);
+    }
+
+    function prevTrack() {
+      currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+      loadTrack(currentTrack);
+    }
+
+    function togglePlayPause() {
+      if (audio.paused) {
+        audio.play();
+        playPauseBtn.textContent = "⏸️";
+      } else {
+        audio.pause();
+        playPauseBtn.textContent = "▶️";
+      }
+    }
+
+    audio.addEventListener("ended", nextTrack);
+
+    window.onload = () => loadTrack(currentTrack);
+  </script>
+</body>
+</html>
